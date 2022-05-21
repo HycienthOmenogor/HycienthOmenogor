@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for sale in sold_list %}
+    <article>
+        <h2 class="{{ sale.date_created }}">
+            {{sale.date}}
+        </h2>
+        <h3>
+            <a href='{% url "sold-detail" sale.id %}'>
+                {{sale.product_name}}
+            </a>
+        </h3>
+        <p> {{sale.product_name}}
+            {{sale.quantity_sold}}
+        </p>
+    </article>
+{% endfor %}
+{% endblock %}

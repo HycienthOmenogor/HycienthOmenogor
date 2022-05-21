@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<article>
+    <h3>{{sold.date}}</h3>
+    <h5> Product    Quantity    Price   Total   Note </h5>
+    <table>
+    <p> {{sold.product_name}}
+        {{sold.quantity_sold}}
+        {{sold.unit_price}}
+        {{sold.total}}
+        {{sold.note}}
+    </p>
+    </table>
+</article>
+{% endblock %}
