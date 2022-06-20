@@ -1,0 +1,34 @@
+{% extends 'sales/base.html' %}
+
+{% block content %}
+<form method='Post'>
+    {% csrf_token %}
+    <p>
+        Are you sure you want to delete 
+         <table>
+        <tr>
+            <th> S/N </th>
+            <th> Product </th>
+            <th> Quantity </th>
+            <th> Price </th>
+            <th> Total </th>
+            <th> Note </th>
+        </tr>
+        <tr>
+            <td>{{object.pk}}</td>
+            <td>{{object.product_name}}</td>
+            <td>{{object.quantity_sold}}</td>
+            <td>{{object.unit_price}}</td>
+            <td>{{object.total}}</td>
+            <td>{{object.note}}</td>
+        </tr>
+    </table>
+    </p>
+    <input type='submit' value='confirm'>
+</form>
+
+<a href="{% url 'sold-dates-list' %}">
+    <button>Cancel</button>
+</a>
+
+{% endblock %}

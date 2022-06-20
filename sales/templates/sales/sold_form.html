@@ -1,0 +1,24 @@
+{% extends 'sales/base.html' %}
+
+{% block content %}
+
+<form method='Post'>
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type='submit' value='save'>
+</form>
+
+{% if sale %}
+    <a href="{% url 'sold-date-detail' sale.id %}">
+        <button>Cancel</button>
+    </a>
+
+{% else %}
+    <a href="{% url 'sold-dates-list' %}">
+        <button>Cancel</button>
+    </a>
+
+{% endif %}
+{% endblock %}

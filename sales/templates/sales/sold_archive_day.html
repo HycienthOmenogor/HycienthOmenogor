@@ -1,0 +1,53 @@
+{% extends 'sales/base.html' %}
+{% block content %}
+
+
+<h3>{{day|date:'F j, Y'}}</h3>
+    <table>
+        <tr>
+            <th>S/N</th> 
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Note</th>
+        </tr>
+
+        {% for sale in object_list %}
+        <tr>
+            <p>
+                <td>{{sale.pk}}</td>  
+                <td>{{sale.product_name}}</td>
+                <td>{{sale.quantity_sold}}</td>
+                <td>{{sale.unit_price}}</td>
+                <td>{{sale.totalAmountOfProduct}}</td>
+                <td>{{sale.note}}</td>
+            </p>
+        {% endfor %}
+        </tr>
+    </table>
+
+    <a href="{% url 'sold-create' %}">
+        <button>Add</button>
+    </a>
+
+
+    {% comment %}
+    <div class='pagination'>
+            <span class='step-links'>
+                {% if object_list.has_previous %}
+                {# <a href='?page=1'>&laquo;first</a> #}
+                <a href='?page={{object_list.previous_page_number}}'>previous</a>
+                {% endif %}
+                <span class='current'>
+                    Page {{object_list.number}} of {{paginator.num_pages}}.
+                </span>
+                {% if object_list.has_next %}
+                <a href='?page{{object_list.next_page_number}}'>next</a>
+                {# <a href='?page={{object_list.paginator.num_pages}}'>last&raquo;</a> #}
+                {% endif %}
+            </span>
+    </div>
+    {% endcomment %}
+
+{% endblock %}
