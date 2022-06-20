@@ -1,19 +1,22 @@
-{% extends 'base.html' %}
+{% extends 'sales/base.html' %}
 {% block content %}
 
-{% for sale in sold_list %}
-    <article>
-        <h2 class="{{ sale.date_created }}">
-            {{sale.date}}
-        </h2>
-        <h3>
-            <a href='{% url "sold-detail" sale.id %}'>
-                {{sale.product_name}}
-            </a>
-        </h3>
-        <p> {{sale.product_name}}
-            {{sale.quantity_sold}}
+    <div>
+        {% for day in date_list %}
+        <p>
+        <a href="{% url 'sold-archive' day|date:'Y' day|date:'b' day|date:'d' %}">
+            {{day}}
+            </a> 
         </p>
-    </article>
-{% endfor %}
+
+        <!-- if the list is empty -->
+        {% empty %}
+        <li> Sorry, no sale in the list.</li>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'sold-create' %}">
+        <button>Create</button>
+    </a>
+
 {% endblock %}
