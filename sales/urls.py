@@ -6,8 +6,23 @@ urlpatterns = [
         path('', views.SoldIndexView.as_view(),
             name='sold-dates-list'),
 
-        #path('sale/<int:year>/<int:month>/<int:day>/',
-        #views.SoldDetailView.as_view(), name='sold-detail'),
+        path('products/', views.ProductsListView.as_view(),
+            name='products-list'),
+
+        path('products/create/',
+            views.ProductEntryView.as_view(),
+            name='products-create'),
+
+        path('products/delete/<int:pk>/',
+            views.ProductsDeleteView.as_view(),
+            name='products-delete'),
+
+        path('products/update/<int:pk>/',
+            views.ProductsUpdateView.as_view(),
+            name='products-update'),
+
+        path('products/<slug:product_detail>/', views.ProductsDetailView.as_view(),
+            name='products-detail'),
 
         path('sale/<int:year>/<str:month>/<int:day>/',
             views.SoldDayArchiveView.as_view(),

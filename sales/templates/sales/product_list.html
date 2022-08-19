@@ -1,0 +1,36 @@
+{% extends 'sales/product_base.html' %}
+{% block content %}
+
+    <div>
+        <table>
+            <tr>
+                <th>S/N</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Expiry Date</th>
+            </tr>
+                {% for product in object_list reversed %}
+            <tr>
+                <p>
+                    <td>{{product.pk}}</td>
+                    <td>{{product.product_name}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.expiry_date}}</td>
+                </p>
+            </tr>
+                {% endfor %}
+        </table>
+
+        <!-- if the list is empty -->
+        {% if empty %}
+        <li> Sorry, no product in the list.</li>
+        {% endif %}
+    </div>
+
+    {% comment %}
+    <a href="{% url 'sold-create' %}">
+    <button>Create</button>
+    </a>
+    {% endcomment %}
+
+{% endblock %}

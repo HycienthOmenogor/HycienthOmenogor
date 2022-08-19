@@ -1,4 +1,4 @@
-{% extends 'sales/base.html' %}
+{% extends 'sales/product_base.html' %}
 
 {% block content %}
 <form method='Post'>
@@ -10,17 +10,13 @@
             <th> S/N </th>
             <th> Product </th>
             <th> Quantity </th>
-            <th> Price </th>
-            <th> Total </th>
-            <th> Note </th>
+            <th> Expiry Date </th>
         </tr>
         <tr>
             <td>{{object.pk}}</td>
             <td>{{object.product_name}}</td>
-            <td>{{object.quantity_sold}}</td>
-            <td>{{object.unit_price}}</td>
-            <td>{{object.total}}</td>
-            <td>{{object.note}}</td>
+            <td>{{object.quantity}}</td>
+            <td>{{object.expiry_date}}</td>
         </tr>
     </table>
     </p>

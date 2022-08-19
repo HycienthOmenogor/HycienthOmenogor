@@ -2,13 +2,49 @@ from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic import(DetailView, DeleteView, UpdateView, CreateView)
+from django.views.generic import(
+        DetailView, DeleteView, UpdateView, CreateView, ListView)
 from django.views.generic.dates import DayArchiveView, DateDetailView, ArchiveIndexView
-from .models import Sold
+from .forms import SalesForm, ProductsForm
+from .models import Sold, Products
 
 # Create a login url so you are directed to it
 class LockedView(LoginRequiredMixin):
     login_url = "admin:login"
+
+# Creates a view of list of available products remaining
+class ProductsListView(ListView):
+    model = Products
+    #queryset = Products.objects.all()
+    template_name = 'sales/product_list.html'
+
+class ProductEntryView(CreateView):
+    model = Products
+    #fields = ['product_name']
+    #template_name = 'sales/product_form.html'
+    form_class = ProductsForm
+
+class ProductsDetailView(DetailView):
+    model = Products
+    template_name = 'sales/product_detail.html'
+    slug_field = 'pk'
+    slug_url_kwarg = 'product_detail'
+
+    #def get_context_data(self, **kwargs):
+        #context = super(ProductsDetailView, self).get_context_data(**kwargs)
+        #return context
+    #def get_queryset(self):
+        #return Products.objects.all()
+
+class ProductsDeleteView(DeleteView):
+    model= Products
+    template_name = 'sales/product_confirm_delete.html'
+    success_url = reverse_lazy('products-list')
+
+class ProductsUpdateView(UpdateView):
+    model = Products
+    fields=['product_name', 'quantity', 'expiry_date'] 
+    success_url = reverse_lazy('products-list')
 
 # Creates a view of list of products sold 
 class SoldIndexView(ArchiveIndexView):
@@ -24,13 +60,6 @@ class SoldIndexView(ArchiveIndexView):
         months = Sold.objects.dates('date', 'day', order='DESC')
         context['months'] = months
         return context
-
-'''Remove this block DetailView   
-# Creates a detailed information of products sold
-#class SoldDetailView(LockedView, DetailView):
-class SoldDetailView(DetailView):
-    model = Sold
-'''
 
 # Creates day view of products
 class SoldDayArchiveView(DayArchiveView):
@@ -54,8 +83,7 @@ class SoldDateDetailView(DateDetailView):
 # Creates a form for entering records
 class SoldEntryView(CreateView):
     model = Sold
-    fields = ['date', 'product_name', 'quantity_sold', 'unit_price', 'total', 'note']
-    #success_url = reverse_lazy('sold-dates-list')
+    form_class = SalesForm
 
 # Updates the field in a form
 class SoldUpdateView(UpdateView):
